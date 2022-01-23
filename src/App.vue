@@ -99,21 +99,22 @@ export default defineComponent ({
       }
       // Todoへの追加
       state.todos = [...state.todos, newTodo];
-      // 入力フォームを空にする
+      // 追加完了後、入力フォームを空にする + フォーカスを当てる
+      focusForm();
       state.todoText = '';
     }
 
     // deleteボタン押下時の処理
     const removeTodo = (todoId: number) => {
-      if (confirm("Todoを削除しますか？")) {
-        // 引数に渡したtodoId"以外"の要素で配列を再生成
-        const returnTodos: Todo[] = [...state.todos].filter((newTodos) => newTodos.id !== todoId);
-        // 再生成した配列をセット
-        state.todos = returnTodos;
-        focusForm();
-      } else {
-        /** 何もしない */
-      }
+      // 確認メッセージ キャンセルは処理中断
+      if (!confirm("Todoを削除しますか？")) return; 
+
+      // 確認メッセージでOKボタン押下（処理実行）
+      // 引数に渡したtodoId"以外"の要素で配列を再生成
+      const returnTodos: Todo[] = [...state.todos].filter((newTodos) => newTodos.id !== todoId);
+      // 再生成した配列をセット
+      state.todos = returnTodos;
+      focusForm();
     }
 
     // フォームにフォーカスを当てる
