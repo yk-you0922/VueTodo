@@ -1,7 +1,7 @@
 <template>
   <div class="error" v-if="props.errorMessages.length > 0">
     <ul>
-      <li v-for="errorMessage in state.errorMessages" :key="errorMessage">
+      <li v-for="errorMessage in props.errorMessages" :key="errorMessage">
         {{ errorMessage }}
       </li>
     </ul>

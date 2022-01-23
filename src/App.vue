@@ -2,13 +2,7 @@
 <template>
   <div id="app-wrapper">
     <!-- Error.vue -->
-    <div class="error" v-if="state.errorMessages.length > 0">
-      <ul>
-        <li v-for="errorMessage in state.errorMessages" :key="errorMessage">
-          {{ errorMessage }}
-        </li>
-      </ul>
-    </div>
+    <ErrorList v-bind:errorMessages="state.errorMessages"/>
 
     <!-- Form.vue -->
     <div id="todoForm" class="form-btn-wrapper">
@@ -55,13 +49,15 @@ import {
 } from 'vue';
 // import Card from './components/Card.vue';
 // import Form from './components/Form.vue';
+import ErrorList from './components/ErrorList.vue';
 import { Todo } from './types/Todo';
-import { ErrorMessage } from './constant/ErrorMessage';
-import { MessageManager } from './constant/ErrorMessage';
+import { ErrorMessage } from './constants/ErrorMessage';
+import { MessageManager } from './constants/ErrorMessage';
 
 export default defineComponent ({
   components: {
     // コンポーネント化したものをここで宣言
+    ErrorList,
   },
   setup() {
     // 参照するオブジェクト
@@ -159,17 +155,7 @@ export default defineComponent ({
     color: #2c3e50;
     margin-top: 40px;
   }
-
-  /* Error.vue */
-  .error {
-    color: red;
-    font-weight: bold;
-    font-size: 15px;
-  }
-  .error ul li {
-    list-style: none;
-  }
-
+  
   /* Form.vue */
   .form-btn-wrapper {
     vertical-align: middle;
