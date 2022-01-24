@@ -1,13 +1,16 @@
 <template>
-  <div class="form-btn-wrapper">
+  <div id="todoForm" class="form-btn-wrapper">
     <input 
-      id="todo" class="todo-form" 
-      type="text" placeholder="Please Write Todo"
-      v-model="state.todo"
+      id="todo" 
+      class="todo-form" 
+      type="search" 
+      placeholder="Please Write Todo"
+      v-model="props.todoTextValue"
+      @input="$emit('update:todoTextValue', $event.target.value)"
     />
     <button 
       class="submit-btn" 
-      @click="onClick"
+      v-on:click="onSubmit()"
     >
       Add Todo
     </button>
@@ -15,27 +18,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
-
-interface State {
-  todo: string;
-}
+import { defineComponent } from 'vue';
 
 export default defineComponent ({
-  setup() {
-    const state = reactive<State>({
-      todo: ''
-    })
+  name: 'Form',
+  props: {
+    todoTextValue: {
+      type: String
+    }
+  },
+  setup(props, { emit }) {
 
-    const onClick = () => {
-      console.log(state.todo);
+    const onSubmit = () => {
+      // emit()の中身をキーに、親コンポーネントとイベントを繋ぐ
+      emit('onClickAddTodo', props);
     }
 
     return {
-      state,
-      onClick
+      props,
+      onSubmit,
     }
-  }
+  },
 }) // export default defineComponent
 </script>
 
@@ -44,17 +47,20 @@ export default defineComponent ({
   .form-btn-wrapper {
     vertical-align: middle;
     position: relative;
+    width: 80%;
+    margin: 0 auto;
   }
 
   .todo-form {
     margin-right: 30px;
     height: 70px;
-    width: 700px;
     border-radius: 8px;
     border: none;
-    border-bottom: 3px dotted #ccc;
     outline: 0;
-    font-size: 30px;
+    font-size: 50px;
+    font-weight: bold;
+    background-color: #555;
+    color: #777;
   }
 
   .todo-form::placeholder {
@@ -64,7 +70,7 @@ export default defineComponent ({
   }
 
   input:focus {
-    outline: 3px #f0f8ff solid;
+    outline: 3px #777 solid;
   }
 
   .submit-btn {
