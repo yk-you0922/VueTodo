@@ -11,21 +11,10 @@
     />
 
     <!-- Card.vue -->
-    <div id="mainCard" class="card-wrapper">
-      <!-- v-forで繰り返し -->
-      <div v-for="todo in state.todos" :key="todo.id">
-
-        <!-- Item.vue -->
-        <div class="item-container">
-          <div class="item-bar">
-            <!-- pタグの中身はpropsとして付与？ -->
-            <p class="item">{{ todo.text }}</p>
-            <button v-on:click="removeTodo(todo.id)" class="delete-btn">✕</button>
-          </div>
-        </div>
-        
-      </div>
-    </div>
+    <Card 
+      id="mainCard"
+      v-model:todos="state.todos"
+    />
 
   </div><!-- #app-wrapper -->
 </template>
@@ -35,7 +24,7 @@ import {
   defineComponent, 
   reactive,
 } from 'vue';
-// import Card from './components/Card.vue';
+import Card from './components/Card.vue';
 import Form from './components/Form.vue';
 import ErrorList from './components/ErrorList.vue';
 import { Todo } from './types/Todo';
@@ -48,6 +37,7 @@ export default defineComponent ({
     // コンポーネント化したものをここで宣言
     ErrorList,
     Form,
+    Card,
   },
   setup() {
     // 参照するオブジェクト
@@ -146,53 +136,5 @@ export default defineComponent ({
     color: #2c3e50;
     margin-top: 40px;
   }
-  
-  /* Card.vue */
-  .card-wrapper {
-    width: 80%;
-    height: 80vh;
-    border-radius: 8px;
-    background-color: #555;
-    padding: 15px;
-  } 
 
-  /* Item.vue */
-  .item-container {
-    border-radius: 8px;
-    background-color: #777;
-    height: 50px;
-    margin-bottom: 15px;
-    box-shadow: -4px -6px 2px #444 inset;
-  }
-
-  .item-bar {
-    padding: 5px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .item {
-    font-size: 30px;
-    margin: 0px 0px 10px 5px;
-  }
-
-  .delete-btn {
-    outline: 0;
-    border: 0;
-    background-color: #777;
-    font-size: 25px;
-    height: 30px;
-    font-weight: bold;
-  }
-  /* ボタンホバー時 */
-  .delete-btn:hover {
-    opacity: 0.8;
-    background-color: #777;
-    cursor: pointer;
-  }
-  /* ボタン押下時 */
-  .delete-btn:active {
-    font-weight: normal;
-    font-size: 23px;
-  }
 </style>
