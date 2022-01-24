@@ -5,27 +5,15 @@
     <ErrorList v-bind:errorMessages="state.errorMessages"/>
 
     <!-- Form.vue -->
-    <div id="todoForm" class="form-btn-wrapper">
-      <input 
-        id="todo" 
-        class="todo-form" 
-        type="search" 
-        placeholder="Please Write Todo"
-        v-model="state.todoText"
-      />
-        <!-- v-model="state.todo" -->
-      <button 
-        class="submit-btn" 
-        v-on:click="addTodo()"
-      >
-        Add Todo
-      </button>
-    </div>
+    <Form 
+      v-model:todoTextValue="state.todoText" 
+      v-on:onClickAddTodo="addTodo()"
+    />
 
     <!-- Card.vue -->
     <div id="mainCard" class="card-wrapper">
       <!-- v-forで繰り返し -->
-      <div v-for="todo in state.todos" v-bind:key="todo.id">
+      <div v-for="todo in state.todos" :key="todo.id">
 
         <!-- Item.vue -->
         <div class="item-container">
@@ -48,29 +36,31 @@ import {
   reactive,
 } from 'vue';
 // import Card from './components/Card.vue';
-// import Form from './components/Form.vue';
+import Form from './components/Form.vue';
 import ErrorList from './components/ErrorList.vue';
 import { Todo } from './types/Todo';
 import { ErrorMessage } from './constants/ErrorMessage';
 import { MessageManager } from './constants/ErrorMessage';
 
 export default defineComponent ({
+  name: 'App',
   components: {
     // コンポーネント化したものをここで宣言
     ErrorList,
+    Form,
   },
   setup() {
     // 参照するオブジェクト
     const state = reactive({
       todoText: '',
-      todos: new Array<Todo>(),
-      errorMessages: new Array<string>()
+      todos: Array<Todo>(),
+      errorMessages: Array<String>()
     })
 
     // Todo追加ボタン押下時の処理
     const addTodo = () => {
       // エラーの初期化
-      state.errorMessages = [];
+      state.errorMessages = []; 
       // 未入力チェック
       if (!state.todoText) {
         state.errorMessages.push(MessageManager(ErrorMessage.NO_INPUT, "Todo"));
@@ -100,8 +90,8 @@ export default defineComponent ({
       // Todoへの追加
       state.todos = [...state.todos, newTodo];
       // 追加完了後、入力フォームを空にする + フォーカスを当てる
-      focusForm();
       state.todoText = '';
+      focusForm();
     }
 
     // deleteボタン押下時の処理
@@ -157,54 +147,6 @@ export default defineComponent ({
     margin-top: 40px;
   }
   
-  /* Form.vue */
-  .form-btn-wrapper {
-    vertical-align: middle;
-    position: relative;
-  }
-
-  .todo-form {
-    margin-right: 30px;
-    height: 70px;
-    width: 700px;
-    border-radius: 8px;
-    border: none;
-    outline: 0;
-    font-size: 50px;
-    font-weight: bold;
-    background-color: #555;
-    color: #777;
-  }
-
-  .todo-form::placeholder {
-    font-weight: bold;
-    font-size: 30px;
-    align-content: center;
-  }
-
-  input:focus {
-    outline: 3px #777 solid;
-  }
-
-  .submit-btn {
-    padding: 10px;
-    width: 100px;
-    height: 70px;
-    background-color: #6495ed;
-    color: #eee;
-    font-weight: bold;
-    border-radius: 8px;
-    border: 0;
-    outline: 0;
-    overflow: visible;
-    line-height: 60px;
-  }
-
-  .submit-btn:hover {
-    opacity: 0.8;
-    cursor: pointer;
-  }
-
   /* Card.vue */
   .card-wrapper {
     width: 80%;
