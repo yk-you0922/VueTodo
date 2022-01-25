@@ -1,22 +1,17 @@
 <!-- アプリ全体のベース -->
 <template>
+  <Header v-bind:title="state.appTitle"/>
   <div id="app-wrapper">
-    <!-- Error.vue -->
     <ErrorList v-bind:errorMessages="state.errorMessages"/>
-
-    <!-- Form.vue -->
     <Form 
       v-model:todoTextValue="state.todoText" 
       v-on:onClickAddTodo="addTodo"
     />
-
-    <!-- Card.vue -->
     <Card 
       id="mainCard"
       v-model:todos="state.todos"
       v-on:onClickRemoveTodo="removeTodo"
     />
-
   </div><!-- #app-wrapper -->
 </template>
 
@@ -28,6 +23,7 @@ import {
 import Card from './components/Card.vue';
 import Form from './components/Form.vue';
 import ErrorList from './components/ErrorList.vue';
+import Header from './components/Header.vue';
 import { Todo } from './types/Todo';
 import { ErrorMessage } from './constants/ErrorMessage';
 import { MessageManager } from './constants/ErrorMessage';
@@ -36,6 +32,7 @@ export default defineComponent ({
   name: 'App',
   components: {
     // コンポーネント化したものをここで宣言
+    Header,
     ErrorList,
     Form,
     Card,
@@ -43,6 +40,7 @@ export default defineComponent ({
   setup(_, context) {
     // 参照するオブジェクト
     const state = reactive({
+      appTitle: 'VueTodo',
       todoText: '',
       todos: Array<Todo>(),
       errorMessages: Array<String>(),
