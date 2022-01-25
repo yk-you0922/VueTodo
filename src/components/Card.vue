@@ -50,10 +50,11 @@ export default defineComponent ({
   /* Card.vue */
   .card-wrapper {
     width: 80%;
-    height: 80vh;
+    height: 650px;
     border-radius: 8px;
     background-color: #555;
     padding: 15px;
+    margin-bottom: 30px;
   } 
 </style>
 
