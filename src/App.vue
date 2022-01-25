@@ -19,6 +19,7 @@
 import { 
   defineComponent, 
   reactive,
+  onMounted,
 } from 'vue';
 import Card from './components/Card.vue';
 import Form from './components/Form.vue';
@@ -46,6 +47,11 @@ export default defineComponent ({
       errorMessages: Array<String>(),
     })
 
+    // 画面初期表示時にフォーカスイン処理
+    onMounted (() => {
+      focusForm();
+    })
+
     // Todo追加ボタン押下時の処理
     const addTodo = () => {
       // エラーの初期化
@@ -69,8 +75,8 @@ export default defineComponent ({
         id: state.todos.length+1,
         text: state.todoText
       }
-      // Todoの数チェック(17個目はエラー)
-      if (state.todos.length == 16) {
+      // Todoの数チェック(11個目はエラー)
+      if (state.todos.length === 10) {
         state.errorMessages.push(MessageManager(ErrorMessage.OVER_TODO_LENGTH, "Todo"));
         // エラーの場合、入力フォームにフォーカスを当てる
         focusForm();
@@ -103,6 +109,7 @@ export default defineComponent ({
     }
 
     return {
+      onMounted,
       context,
       state,
       addTodo,
