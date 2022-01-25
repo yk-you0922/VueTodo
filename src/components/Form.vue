@@ -10,7 +10,7 @@
     />
     <button 
       class="submit-btn" 
-      v-on:click="onSubmit()"
+      @click="onSubmit()"
     >
       Add Todo
     </button>

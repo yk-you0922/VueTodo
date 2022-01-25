@@ -4,7 +4,7 @@
       <!-- pタグの中身はpropsとして付与？ -->
       <p class="item">{{ props.todoText }}</p>
       <button 
-        v-on:click="handleClick(props.todoId)" 
+        @click="handleClick(props.todoId)" 
         class="delete-btn"
       >
         ✕

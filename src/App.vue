@@ -1,16 +1,16 @@
 <!-- アプリ全体のベース -->
 <template>
-  <Header v-bind:title="state.appTitle"/>
+  <Header :title="state.appTitle"/>
   <div id="app-wrapper">
-    <ErrorList v-bind:errorMessages="state.errorMessages"/>
+    <ErrorList :errorMessages="state.errorMessages"/>
     <Form 
       v-model:todoTextValue="state.todoText" 
-      v-on:onClickAddTodo="addTodo"
+      @onClickAddTodo="addTodo"
     />
     <Card 
       id="mainCard"
       v-model:todos="state.todos"
-      v-on:onClickRemoveTodo="removeTodo"
+      @onClickRemoveTodo="removeTodo"
     />
   </div><!-- #app-wrapper -->
 </template>

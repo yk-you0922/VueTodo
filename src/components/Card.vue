@@ -5,7 +5,7 @@
       <Item
         v-model:todoId="todo.id"
         v-model:todoText="todo.text"
-        v-on:onClickRemoveTodo="handleClick"
+        @onClickRemoveTodo="handleClick"
       />
     </div>
   </div>
