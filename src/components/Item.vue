@@ -2,23 +2,39 @@
   <div class="item-container">
     <div class="item-bar">
       <!-- pタグの中身はpropsとして付与？ -->
-      <p class="item">{{todo}}</p>
-      <button class="delete-btn">✕</button>
+      <p class="item">{{ props.todoText }}</p>
+      <button 
+        v-on:click="handleClick(props.todoId)" 
+        class="delete-btn"
+      >
+        ✕
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent ({
-  components: {
+  name: 'Item',
+  props:{
+    todoId: {
+      type: Number
+    },
+    todoText: {
+      type: String
+    }
   },
-  setup() {
-    const todo = ref<String>("test");
+  setup(props, context) {
+
+    const handleClick = (todoId: number) => {
+      context.emit('onClickRemoveTodo', todoId);
+    }
 
     return {
-      todo
+      props,
+      handleClick
     }
   }
 })
@@ -28,8 +44,10 @@ export default defineComponent ({
 <style scoped>
   .item-container {
     border-radius: 8px;
-    background-color: #fff;
+    background-color: #777;
     height: 50px;
+    margin-bottom: 15px;
+    box-shadow: -4px -6px 2px #444 inset;
   }
 
   .item-bar {
@@ -40,29 +58,26 @@ export default defineComponent ({
 
   .item {
     font-size: 30px;
-    margin: 5px;
+    margin: 0px 0px 10px 5px;
   }
 
   .delete-btn {
     outline: 0;
     border: 0;
-    background-color: #fff;
-    font-size: 20px;
+    background-color: #777;
+    font-size: 25px;
+    height: 30px;
     font-weight: bold;
-    width: 45px;
   }
   /* ボタンホバー時 */
   .delete-btn:hover {
     opacity: 0.8;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 45px;
-    background-color: #eee;
+    background-color: #777;
     cursor: pointer;
   }
   /* ボタン押下時 */
   .delete-btn:active {
     font-weight: normal;
-    font-size: 15px;
+    font-size: 23px;
   }
 </style>
