@@ -87,7 +87,6 @@ export default defineComponent ({
 
     // deleteボタン押下時の処理
     const removeTodo = (todoId :number) => {
-      console.log(todoId)
       // 確認メッセージ キャンセルは処理中断
       if (!confirm("Todoを削除しますか？")) return; 
 
