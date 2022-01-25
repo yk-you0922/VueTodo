@@ -8,7 +8,12 @@
         <div class="item-bar">
           <!-- pタグの中身はpropsとして付与？ -->
           <p class="item">{{ todo.text }}</p>
-          <button v-on:click="removeTodo(todo.id)" class="delete-btn">✕</button>
+          <button 
+            v-on:click="handleClick(todo.id)" 
+            class="delete-btn"
+          >
+            ✕
+          </button>
         </div>
       </div>
       
@@ -19,7 +24,6 @@
 <script lang="ts">
 import { 
   defineComponent, reactive, 
-  // reactive
 } from 'vue';
 // import Item from './Item.vue';
 import { Todo } from '../types/Todo';
@@ -31,15 +35,21 @@ export default defineComponent ({
   props: {
     todos: [],
   },
-  setup(props) {
+  setup(props, context) {  
     
     const state = reactive({
       todos: Array<Todo>(),
+      todoId: 0
     })
+
+    const handleClick = (todoId: number) => {
+      context.emit('onClickRemoveTodo', todoId);
+    }
 
     return {
       props,
-      state
+      state,
+      handleClick
     }
   }
 }) // export default defineComponent
