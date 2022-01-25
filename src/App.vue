@@ -99,6 +99,7 @@ export default defineComponent ({
       const returnTodos: Todo[] = [...state.todos].filter((newTodos) => newTodos.id !== todoId);
       // 再生成した配列をセット
       state.todos = returnTodos;
+      state.errorMessages = [];
       focusForm();
     }
 
