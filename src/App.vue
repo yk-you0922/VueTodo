@@ -21,13 +21,13 @@ import {
   reactive,
   onMounted,
 } from 'vue';
-import Card from './components/Card.vue';
-import Form from './components/Form.vue';
-import ErrorList from './components/ErrorList.vue';
-import Header from './components/Header.vue';
-import { Todo } from './types/Todo';
-import { ErrorMessage } from './constants/ErrorMessage';
-import { MessageManager } from './constants/ErrorMessage';
+import Card from 'src/components/Card.vue';
+import Form from 'src/components/Form.vue';
+import ErrorList from 'src/components/ErrorList.vue';
+import Header from 'src/components/Header.vue';
+import { Todo } from 'src/types/Todo';
+import { ErrorMessage } from 'src/constants/ErrorMessage';
+import { MessageManager } from 'src/constants/ErrorMessage';
 
 export default defineComponent ({
   name: 'App',
