@@ -15,8 +15,8 @@
 import { 
   defineComponent, reactive, 
 } from 'vue';
-import Item from 'src/Item.vue';
-import { Todo } from 'src/types/Todo';
+import Item from './Item.vue';
+import { Todo } from '../types/Todo';
 
 export default defineComponent ({
   components: {
