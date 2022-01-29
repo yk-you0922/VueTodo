@@ -1,10 +1,9 @@
 <template>
   <div class="item-container">
     <div class="item-bar">
-      <!-- pタグの中身はpropsとして付与？ -->
       <p class="item">{{ props.todoText }}</p>
       <button 
-        @click="handleClick(props.todoId)" 
+        @click="onClickRemoveTodo(props.todoId)" 
         class="delete-btn"
       >
         ✕
@@ -18,23 +17,23 @@ import { defineComponent } from 'vue';
 
 export default defineComponent ({
   name: 'Item',
-  props:{
+  props: {
     todoId: {
-      type: Number
+      type: Number,
+      default: 0
     },
     todoText: {
-      type: String
+      type: String,
+      default: ''
     }
   },
-  setup(props, context) {
-
-    const handleClick = (todoId: number) => {
-      context.emit('onClickRemoveTodo', todoId);
+  setup(props, { emit }) {
+    const onClickRemoveTodo = (todoId: number) => {
+      emit('onClickRemoveTodo', todoId);
     }
-
     return {
       props,
-      handleClick
+      onClickRemoveTodo
     }
   }
 })

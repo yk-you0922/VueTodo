@@ -1,53 +1,20 @@
 <template>
   <div id="mainCard" class="card-wrapper">
-    <!-- v-forで繰り返し -->
-    <div v-for="todo in props.todos" :key="todo.id">
-      <Item
-        v-model:todoId="todo.id"
-        v-model:todoText="todo.text"
-        @onClickRemoveTodo="handleClick"
-      />
-    </div>
+    <!-- 呼び出し元で間に挟んだコンポーネントがslotタグとして表示される -->
+    <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
 import { 
   defineComponent,
-  reactive, 
-  PropType
 } from 'vue';
-import Item from './Item.vue';
-import { Todo } from '../types/Todo';
-
-interface State {
-  todos: Array<Todo>;
-}
 
 export default defineComponent ({
-  components: {
-    Item,
-  },
-  props: {
-    todos: {
-      type: Object as PropType<State>,
-    },
-  },
-  setup(props, context) {  
-    
-    const state = reactive({
-      todos: [],
-      todoId: 0
-    })
-
-    const handleClick = (todoId: number) => {
-      context.emit('onClickRemoveTodo', todoId);
-    }
-
+  name: 'Card',
+  setup() {  
     return {
-      props,
-      state,
-      handleClick
+      /** 見た目のみ */
     }
   }
 }) // export default defineComponent

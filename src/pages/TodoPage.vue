@@ -7,11 +7,14 @@
       @onClickAddTodo="addTodo"
       @onClickError="addError"
     />
-    <Card 
-      id="mainCard"
-      v-model:todos="state.todos"
-      @onClickRemoveTodo="removeTodo"
-    />
+    <Card id="mainCard">
+      <Item
+        v-for="todo in state.todos" :key="todo.id"
+        v-model:todoId="todo.id"
+        v-model:todoText="todo.text"
+        @onClickRemoveTodo="removeTodo"
+      />
+    </Card>
   </div><!-- #todo-wrapper -->
 </template>
 
@@ -25,6 +28,7 @@ import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import Form from '../components/Form.vue';
 import ErrorList from '../components/ErrorList.vue';
+import Item from '../components/Item.vue';
 import { Todo } from '../types/Todo';
 
 interface State {
@@ -42,6 +46,7 @@ export default defineComponent ({
     ErrorList,
     Form,
     Card,
+    Item
   },
   setup() {
     // 参照するオブジェクトと初期値
