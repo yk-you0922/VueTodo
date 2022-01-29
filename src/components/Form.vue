@@ -42,6 +42,8 @@ export default defineComponent ({
     const onSubmit = (value: string) => {
       // stateに値を格納
       state.todoTextValue = value;
+      // エラーメッセージ初期化
+      state.errorMessages = [];
       // 未入力チェック
       if (!value) {
         state.errorMessages.push(MessageManager(ErrorMessage.NO_INPUT, "Todo"));
