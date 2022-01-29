@@ -10,9 +10,7 @@ import { defineComponent } from "@vue/runtime-core";
 export default defineComponent ({
   name: 'Header',
   props: {
-    title: {
-      type: String
-    }
+    title: String
   },
   setup(props) {
     return {
