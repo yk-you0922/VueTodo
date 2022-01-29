@@ -13,22 +13,30 @@
 
 <script lang="ts">
 import { 
-  defineComponent, reactive, 
+  defineComponent,
+  reactive, 
+  PropType
 } from 'vue';
 import Item from './Item.vue';
 import { Todo } from '../types/Todo';
+
+interface State {
+  todos: Array<Todo>;
+}
 
 export default defineComponent ({
   components: {
     Item,
   },
   props: {
-    todos: [],
+    todos: {
+      type: Object as PropType<State>,
+    },
   },
   setup(props, context) {  
     
     const state = reactive({
-      todos: Array<Todo>(),
+      todos: [],
       todoId: 0
     })
 
