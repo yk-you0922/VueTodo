@@ -28,7 +28,7 @@ import { Todo } from '../types/Todo';
 import { ErrorMessage, MessageManager } from '../constants/ErrorMessage';
 
 export default defineComponent ({
-  name: 'App',
+  name: 'TodoPage',
   components: {
     // コンポーネント化したものをここで宣言
     Header,

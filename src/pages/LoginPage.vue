@@ -13,7 +13,7 @@ import {
 import Header from '../components/Header.vue';
 
 export default defineComponent ({
-  name: 'App',
+  name: 'LoginPage',
   components: {
     // コンポーネント化したものをここで宣言
     Header,
