@@ -3,8 +3,9 @@
   <div id="todo-wrapper">
     <ErrorList :errorMessages="state.errorMessages"/>
     <Form 
-      v-model:todoTextValue="state.todoText" 
+      v-model:todos="state.todos"
       @onClickAddTodo="addTodo"
+      @onClickError="addError"
     />
     <Card 
       id="mainCard"
@@ -25,7 +26,6 @@ import Card from '../components/Card.vue';
 import Form from '../components/Form.vue';
 import ErrorList from '../components/ErrorList.vue';
 import { Todo } from '../types/Todo';
-import { ErrorMessage, MessageManager } from '../constants/ErrorMessage';
 
 interface State {
   appTitle: string;
@@ -43,7 +43,7 @@ export default defineComponent ({
     Form,
     Card,
   },
-  setup(_, context) {
+  setup() {
     // 参照するオブジェクトと初期値
     const state = reactive<State>({
       appTitle: 'VueTodo',
@@ -58,39 +58,15 @@ export default defineComponent ({
     })
 
     // Todo追加ボタン押下時の処理
-    const addTodo = () => {
-      // エラーの初期化
-      state.errorMessages = []; 
-      // 未入力チェック
-      if (!state.todoText) {
-        state.errorMessages.push(MessageManager(ErrorMessage.NO_INPUT, "Todo"));
-        // エラーの場合、入力フォームにフォーカスを当てる
-        focusForm();
-        return;
-      }
-      // 入力値チェック
-      if (state.todoText.length > 20) {
-        state.errorMessages.push(MessageManager(ErrorMessage.OVER_LENGTH, "Todo"));
-        // エラーの場合、入力フォームにフォーカスを当てる
-        focusForm();
-        return;
-      }
+    const addTodo = (value: any) => {
       // Todoオブジェクト作成
       const newTodo: Todo = {
         id: state.todos.length+1,
-        text: state.todoText
-      }
-      // Todoの数チェック(11個目はエラー)
-      if (state.todos.length === 10) {
-        state.errorMessages.push(MessageManager(ErrorMessage.OVER_TODO_LENGTH, "Todo"));
-        // エラーの場合、入力フォームにフォーカスを当てる
-        focusForm();
-        return;
+        text: value.todoTextValue
       }
       // Todoへの追加
       state.todos = [...state.todos, newTodo];
-      // 追加完了後、入力フォームを空にする + フォーカスを当てる
-      state.todoText = '';
+      // 追加完了後、フォーカスを当てる
       focusForm();
     }
 
@@ -114,12 +90,22 @@ export default defineComponent ({
       form?.focus();
     }
 
+    // エラーを受け取り、表示する
+    const addError = (error: string) => {
+      // エラー追加前に初期化
+      state.errorMessages = [];
+      // 子コンポーネントから送られたエラーを配列に格納し、表示
+      state.errorMessages.push(error);
+      // フォーカス処理
+      focusForm();
+    }
+
     return {
-      onMounted,
-      context,
       state,
+      onMounted,
       addTodo,
       removeTodo,
+      addError
     }
   }
 }) // export default defineComponent

@@ -5,12 +5,11 @@
       class="todo-form" 
       type="search" 
       placeholder="Please Write Todo"
-      v-model="props.todoTextValue"
-      @input="$emit('update:todoTextValue', $event.target.value)"
+      v-model="state.todoTextValue"
     />
     <button 
       class="submit-btn" 
-      @click="onSubmit()"
+      @click="onSubmit(state.todoTextValue)"
     >
       Add Todo
     </button>
@@ -18,24 +17,56 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType, reactive} from 'vue';
+import { ErrorMessage, MessageManager } from '../constants/ErrorMessage';
+import { Todo } from '../types/Todo';
+
+interface State {
+  todoTextValue: String;
+  errorMessages: Array<String>
+}
 
 export default defineComponent ({
   name: 'Form',
   props: {
-    todoTextValue: {
-      type: String
+    todos: {
+      type: Object as PropType<Array<Todo>>,
     }
   },
   setup(props, { emit }) {
+    const state = reactive<State>({
+      todoTextValue: '',
+      errorMessages: [],
+    })
 
-    const onSubmit = () => {
+    const onSubmit = (value: string) => {
+      // stateに値を格納
+      state.todoTextValue = value;
+      // 未入力チェック
+      if (!value) {
+        state.errorMessages.push(MessageManager(ErrorMessage.NO_INPUT, "Todo"));
+        emit('onClickError', state.errorMessages[0]);
+        return;
+      }
+      // 入力値チェック
+      if (value.length > 20) {
+        state.errorMessages.push(MessageManager(ErrorMessage.OVER_LENGTH, "Todo"));
+        emit('onClickError', state.errorMessages[0]);
+        return;
+      }
+      // Todoの数チェック(11個目はエラー)
+      if (props.todos && props.todos.length === 10) {
+        state.errorMessages.push(MessageManager(ErrorMessage.OVER_TODO_LENGTH, "Todo"));
+        emit('onClickError', state.errorMessages[0]);
+        return;
+      }
       // emit()の中身をキーに、親コンポーネントとイベントを繋ぐ
-      emit('onClickAddTodo', props);
+      emit('onClickAddTodo', state);
+      state.todoTextValue = '';
     }
 
     return {
-      props,
+      state,
       onSubmit,
     }
   },
