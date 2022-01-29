@@ -27,6 +27,13 @@ import ErrorList from '../components/ErrorList.vue';
 import { Todo } from '../types/Todo';
 import { ErrorMessage, MessageManager } from '../constants/ErrorMessage';
 
+interface State {
+  appTitle: string;
+  todoText: string;
+  todos: Array<Todo>;
+  errorMessages: Array<String>;
+}
+
 export default defineComponent ({
   name: 'TodoPage',
   components: {
@@ -37,12 +44,12 @@ export default defineComponent ({
     Card,
   },
   setup(_, context) {
-    // 参照するオブジェクト
-    const state = reactive({
+    // 参照するオブジェクトと初期値
+    const state = reactive<State>({
       appTitle: 'VueTodo',
       todoText: '',
-      todos: Array<Todo>(),
-      errorMessages: Array<String>(),
+      todos: [],
+      errorMessages: [],
     })
 
     // 画面初期表示時にフォーカスイン処理

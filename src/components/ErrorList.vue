@@ -9,11 +9,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+
+interface State {
+  errorMessage: Array<String>;
+}
 
 export default defineComponent ({
   props: {
-    errorMessages: [],
+    errorMessages: {
+      type: Object as PropType<State>,
+    }
   },
   setup(props) {
     return {
