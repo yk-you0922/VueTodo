@@ -1,5 +1,4 @@
 <template>
-  <Header :title="state.appTitle"/>
   <div id="todo-wrapper">
     <ErrorList :errorMessages="state.errorMessages"/>
     <Form 
@@ -24,7 +23,6 @@ import {
   reactive,
   onMounted,
 } from 'vue';
-import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import Form from '../components/Form.vue';
 import ErrorList from '../components/ErrorList.vue';
@@ -42,7 +40,6 @@ export default defineComponent ({
   name: 'TodoPage',
   components: {
     // コンポーネント化したものをここで宣言
-    Header,
     ErrorList,
     Form,
     Card,

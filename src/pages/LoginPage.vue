@@ -1,5 +1,4 @@
 <template>
-  <Header :title="state.appTitle"/>
   <div id="login-wrapper">
     <h1 style="color: #fff">Login Page</h1>
     <button @click="onClickCallUsers">users</button>
@@ -11,7 +10,6 @@ import {
   defineComponent,
   reactive
 } from 'vue';
-import Header from '../components/Header.vue';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { User } from '../types/User';
 
@@ -19,7 +17,6 @@ export default defineComponent ({
   name: 'LoginPage',
   components: {
     // コンポーネント化したものをここで宣言
-    Header,
   },
   setup() {
     // 参照するオブジェクト
