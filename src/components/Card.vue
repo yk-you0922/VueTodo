@@ -1,5 +1,5 @@
 <template>
-  <div id="mainCard" class="card-wrapper">
+  <div id="mainCard" class="card-wrapper" :style="styles">
     <!-- 呼び出し元で間に挟んだコンポーネントがslotタグとして表示される -->
     <slot></slot>
   </div>
@@ -7,14 +7,25 @@
 
 <script lang="ts">
 import { 
+  computed,
   defineComponent,
 } from 'vue';
 
 export default defineComponent ({
   name: 'Card',
-  setup() {  
+  props: {
+    cardHeight: {
+      type: String,
+    }
+  },
+  setup(props) {
+    const styles = computed(() => {
+      return {
+        '--cardHeight': `${props.cardHeight}`
+      }
+    })
     return {
-      /** 見た目のみ */
+      styles
     }
   }
 }) // export default defineComponent
@@ -25,7 +36,8 @@ export default defineComponent ({
   /* Card.vue */
   .card-wrapper {
     width: 80%;
-    height: 650px;
+    height: var(--cardHeight);
+    /* height: 650px; */
     border-radius: 8px;
     background-color: #555;
     padding: 15px;

@@ -6,7 +6,7 @@
       @onClickAddTodo="addTodo"
       @onClickError="addError"
     />
-    <Card id="mainCard">
+    <Card id="mainCard" :cardHeight="state.cardHeight">
       <Item
         v-for="todo in state.todos" :key="todo.id"
         v-model:todoId="todo.id"
@@ -34,6 +34,7 @@ interface State {
   todoText: string;
   todos: Array<Todo>;
   errorMessages: Array<String>;
+  cardHeight: String;
 }
 
 export default defineComponent ({
@@ -52,6 +53,7 @@ export default defineComponent ({
       todoText: '',
       todos: [],
       errorMessages: [],
+      cardHeight: "650px",
     })
 
     // 画面初期表示時にフォーカスイン処理
